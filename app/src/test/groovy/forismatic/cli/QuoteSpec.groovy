@@ -1,6 +1,7 @@
 package forismatic.cli
 
 import spock.lang.Specification
+import spock.lang.Unroll
 
 class QuoteSpec extends Specification {
 
@@ -10,8 +11,8 @@ class QuoteSpec extends Specification {
         String line
 
         when:
-        testFile.withReader {reader ->
-            while((line = reader.readLine()) != null) {
+        testFile.withReader { reader ->
+            while ((line = reader.readLine()) != null) {
                 new Quote(line)
             }
         }
@@ -20,6 +21,7 @@ class QuoteSpec extends Specification {
         notThrown(Exception)
     }
 
+    @Unroll
     def "Client can parse quote correctly"() {
         when:
         def quote = new Quote(text)
@@ -30,8 +32,8 @@ class QuoteSpec extends Specification {
 
         where:
 
-        text                ||  expectedText    |   expectedAuthor
-        "Quote (Author)"    ||  "Quote"         |   "Author"
-        "Quote only"        ||  "Quote only"    |   "Anonymous"
+        text             || expectedText | expectedAuthor
+        "Quote (Author)" || "Quote"      | "Author"
+        "Quote only"     || "Quote only" | "Anonymous"
     }
 }

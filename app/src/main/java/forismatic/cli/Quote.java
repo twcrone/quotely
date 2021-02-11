@@ -5,19 +5,18 @@ public class Quote {
   private final String author;
 
   public Quote(String text) {
-    if(text == null) {
+    if (text == null) {
       throw new IllegalArgumentException("'text' for Quote must not be null");
     }
-    if(text.isBlank()) {
+    if (text.isBlank()) {
       throw new IllegalArgumentException("'text' for Quote should not be blank");
     }
     int startAuthor = text.lastIndexOf("(");
     int endAuthor = text.lastIndexOf(")");
-    if(startAuthor != -1 && endAuthor != -1 && startAuthor < endAuthor) {
+    if (startAuthor != -1 && endAuthor != -1 && startAuthor < endAuthor) {
       this.author = text.substring(startAuthor + 1, endAuthor);
       this.text = text.substring(0, startAuthor).trim();
-    }
-    else {
+    } else {
       this.author = "Anonymous";
       this.text = text;
     }

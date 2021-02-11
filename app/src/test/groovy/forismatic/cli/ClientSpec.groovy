@@ -10,7 +10,7 @@ class ClientSpec extends Specification {
         def quotes = []
 
         when:
-        10.times {quotes << client.getQuote("English", it) }
+        10.times { quotes << client.getQuote("English", it) }
 
         then:
         quotes.every { it != null }
