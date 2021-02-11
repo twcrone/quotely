@@ -9,15 +9,18 @@ import java.net.http.HttpResponse;
 
 public class Client {
 
+  private final String BASE_URI = "http://api.forismatic.com/api/1.0/?method=getQuote&key=";
   private final HttpClient httpClient = HttpClient.newBuilder()
       .version(HttpClient.Version.HTTP_1_1)
       .build();
 
   public Quote getQuote(String language, Long key) {
+    String languageParameter = getLanguageParameter(language);
     Quote quote = null;
     try {
+      URI uri = new URI(BASE_URI + key + "&format=text&lang=" + languageParameter);
       HttpRequest request = HttpRequest.newBuilder()
-          .uri(new URI("http://api.forismatic.com/api/1.0/?method=getQuote&key=" + key + "&format=text&lang=en"))
+          .uri(uri)
           .GET()
           .build();
       HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
@@ -27,5 +30,20 @@ public class Client {
       e.printStackTrace();
     }
     return quote;
+  }
+
+  private static String getLanguageParameter(String language) {
+    String parameter;
+    if(language == null || language.isBlank() || "English".equals(language)) {
+      parameter = "en";
+    }
+    else if("Russian".equals(language)) {
+      parameter = "ru";
+    }
+    else {
+      String message = language + " is not a valid language (e.g 'English', 'Russian'";
+      throw new IllegalArgumentException(message);
+    }
+    return parameter;
   }
 }
