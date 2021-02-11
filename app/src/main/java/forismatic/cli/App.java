@@ -1,7 +1,5 @@
 package forismatic.cli;
 
-import org.checkerframework.checker.units.qual.C;
-
 public class App {
 
     public static void main(String[] args) {
@@ -9,14 +7,23 @@ public class App {
         if(args.length > 0) {
             language = args[0];
         }
-        Client client = new Client();
-        Quote quote = client.getQuote(language, System.currentTimeMillis());
         System.out.println();
+        Quote quote = tryToGetQuote(language);
         if(quote != null) {
             System.out.println(quote.getDisplay());
         }
         else {
             System.out.println("There was an issue fetching a quote.  Please try again later.");
+        }
+    }
+
+    private static Quote tryToGetQuote(String language) {
+        try {
+            Client client = new Client();
+            return client.getQuote(language, System.currentTimeMillis());
+        }
+        catch (Exception e) {
+            return new Quote(e.getMessage());
         }
     }
 }

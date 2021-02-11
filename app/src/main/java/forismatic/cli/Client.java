@@ -41,7 +41,7 @@ public class Client {
       parameter = "ru";
     }
     else {
-      String message = language + " is not a valid language (e.g 'English', 'Russian'";
+      String message = language + " is not a valid language.  Try 'English' or 'Russian'";
       throw new IllegalArgumentException(message);
     }
     return parameter;
