@@ -23,7 +23,6 @@ public class Client {
       HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
       String text = response.body();
       quote = new Quote(text);
-      System.out.println(text);
     } catch (URISyntaxException | InterruptedException | IOException e) {
       e.printStackTrace();
     }

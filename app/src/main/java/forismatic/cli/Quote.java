@@ -30,4 +30,8 @@ public class Quote {
   public String getAuthor() {
     return author;
   }
+
+  public String getDisplay() {
+    return this.text + "\n\n- " + author;
+  }
 }
